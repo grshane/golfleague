@@ -1,68 +1,86 @@
-import Head from 'next/head'
+import Head from 'next/head';
+import { useQuery } from '@apollo/react-hooks';
+import gql from 'graphql-tag';
 import Header from '../components/Header';
+import withApollo from '../lib/apollo';
 
-const Home = () => (
-  <div className="container">
-    <Header/>
-    <Head>
-      <title>Create Next App</title>
-      <link rel="icon" href="/favicon.ico" />
-    </Head>
+const HELLO_QUERY = gql`
+    query HelloQuery {
+        sayHello
+    }
+ `;
 
-    <main>
-      <h1 className="title">
-        Welcome to <a href="https://nextjs.org">Next.js!</a>
-      </h1>
+const Home: React.FC = () => {
+  const { data, loading, error } = useQuery(HELLO_QUERY);
+  return (
+    <div className="container">
+      <Header />
 
-      <p className="description">
-        Get started by editing <code>pages/index.js</code>
-      </p>
+      <Head>
+        <title>Create Next App</title>
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
 
-      <div className="grid">
-        <a href="https://nextjs.org/docs" className="card">
-          <h3>Documentation &rarr;</h3>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
+      <main>
+        <h1 className="title">
+          Welcome to
+          {' '}
+          <a href="https://nextjs.org">Next.js!</a>
+        </h1>
 
-        <a href="https://nextjs.org/learn" className="card">
-          <h3>Learn &rarr;</h3>
-          <p>Learn about Next.js in an interactive course with quizzes!</p>
-        </a>
+        <p className="description">
+          Get started by editing
+          {' '}
+          <code>pages/index.js</code>
+        </p>
 
+        <div className="grid">
+          <a href="https://nextjs.org/docs" className="card">
+            <h3>Documentation &rarr;</h3>
+            <p>Find in-depth information about Next.js features and API.</p>
+          </a>
+
+          <a href="https://nextjs.org/learn" className="card">
+            <h3>Learn &rarr;</h3>
+            <p>Learn about Next.js in an interactive course with quizzes!</p>
+          </a>
+
+          <a
+            href="https://github.com/zeit/next.js/tree/master/examples"
+            className="card"
+          >
+            <h3>Examples &rarr;</h3>
+            <p>Discover and deploy boilerplate example Next.js projects.</p>
+          </a>
+
+          <a
+            href="https://zeit.co/new?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
+            className="card"
+          >
+            <h3>Deploy &rarr;</h3>
+            <p>
+              Instantly deploy your Next.js site to a public URL with ZEIT Now.
+            </p>
+          </a>
+        </div>
+      </main>
+
+      <footer>
         <a
-          href="https://github.com/zeit/next.js/tree/master/examples"
-          className="card"
+          href="https://zeit.co?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
+          target="_blank"
+          rel="noopener noreferrer"
         >
-          <h3>Examples &rarr;</h3>
-          <p>Discover and deploy boilerplate example Next.js projects.</p>
+          Powered by
+          {' '}
+          <img src="/zeit.svg" alt="ZEIT Logo" />
         </a>
+      </footer>
 
-        <a
-          href="https://zeit.co/new?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          className="card"
-        >
-          <h3>Deploy &rarr;</h3>
-          <p>
-            Instantly deploy your Next.js site to a public URL with ZEIT Now.
-          </p>
-        </a>
-      </div>
-    </main>
-
-    <footer>
-      <a
-        href="https://zeit.co?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Powered by <img src="/zeit.svg" alt="ZEIT Logo" />
-      </a>
-    </footer>
-
-    <style jsx>{`
+      <style jsx>
+        {`
       .container {
         min-height: 100vh;
-        padding: 0 0.5rem;
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -184,9 +202,11 @@ const Home = () => (
           flex-direction: column;
         }
       }
-    `}</style>
+    `}
+      </style>
 
-    <style jsx global>{`
+      <style jsx global>
+        {`
       html,
       body {
         padding: 0;
@@ -198,8 +218,10 @@ const Home = () => (
       * {
         box-sizing: border-box;
       }
-    `}</style>
-  </div>
-)
+    `}
+      </style>
+    </div>
+  );
+};
 
-export default Home
+export default withApollo(Home);

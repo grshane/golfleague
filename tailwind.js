@@ -1,13 +1,4 @@
-/**
- * default config from
- * https://github.com/tailwindcss/tailwindcss/blob/master/stubs/defaultConfig.stub.js
- * we also use `tailwind.js` because the default of `babel-plugin-macros`
- * set this file as a tailwind default config.
- */
 module.exports = {
-  prefix: '',
-  important: false,
-  separator: ':',
   theme: {
     colors: {
       transparent: 'transparent',
@@ -487,6 +478,13 @@ module.exports = {
     width: ['responsive'],
     zIndex: ['responsive'],
   },
-  corePlugins: {},
+  corePlugins: {
+    preflight: true,
+  },
   plugins: [],
+  extend: {
+    gridTemplateColumns: {
+      score: '100px repeat(9, 1fr) 1.5fr 1fr 1fr 2fr',
+    },
+  },
 };
